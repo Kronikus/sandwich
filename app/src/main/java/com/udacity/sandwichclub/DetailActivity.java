@@ -1,5 +1,6 @@
 package com.udacity.sandwichclub;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.TestLooperManager;
@@ -22,11 +23,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        ImageView ingredientsIv = findViewById(R.id.image_iv);
-        TextView  othername = findViewById(R.id.also_known_tv);
-        TextView   placeoforigin = findViewById(R.id.origin_tv);
-        TextView description = findViewById(R.id.description_tv);
-        TextView ingredients = findViewById(R.id.ingredients_tv);
+
 
 
         Intent intent = getIntent();
@@ -43,14 +40,28 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
+        Sandwich sandwich = JsonUtils.parseSandwichJson(this,json);
         if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
             return;
         }
 
-        populateUI();
+        populateUI(sandwich);
+
+}
+
+    private void closeOnError() {
+        finish();
+        Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void populateUI(Sandwich sandwich) {
+        ImageView ingredientsIv = findViewById(R.id.image_iv);
+        TextView  othername = findViewById(R.id.also_known_tv);
+        TextView   placeoforigin = findViewById(R.id.origin_tv);
+        TextView description = findViewById(R.id.description_tv);
+        TextView ingredients = findViewById(R.id.ingredients_tv);
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
@@ -60,14 +71,5 @@ public class DetailActivity extends AppCompatActivity {
         placeoforigin.setText(sandwich.getPlaceOfOrigin());
         description.setText(sandwich.getDescription());
         ingredients.setText(sandwich.getIngredients().toString().replace("[", "").replace("]", ""));
-}
-
-    private void closeOnError() {
-        finish();
-        Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void populateUI() {
-
     }
 }

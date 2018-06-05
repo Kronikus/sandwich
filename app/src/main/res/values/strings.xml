@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Sandwich Club</string>
+    <!-- Sandwich data names -->
+    <string name="sandwich_name">name</string>
+    <string name="sandwich_mainname">mainName</string>
+    <string name="sandwich_alsoknownas">alsoKnownAs</string>
+    <string name="sandwich_placeoforigin">placeOfOrigin</string>
+    <string name="sandwich_description">description</string>
+    <string name="sandwich_image">image</string>
+    <string name="sandwich_ingredients">ingredients</string>
 
     <!-- Detail Activity-->
     <string name="detail_also_known_as_label">Also known as:</string>
